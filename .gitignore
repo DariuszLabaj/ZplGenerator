@@ -1,0 +1,6 @@
+/.hg
+/.__pychache__
+*.pyc
+*.zpl
+*.ttf
+*.png
