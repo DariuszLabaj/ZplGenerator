@@ -1,4 +1,4 @@
-# Zpl language command generator for generating labels, fonts graphic files to send to printers using Zpl language
+# Zpl language command generator for generating labels, fonts and graphic files to send to printers using Zpl language
 
 ## Creating Font File
 
@@ -54,7 +54,7 @@ objBox = label.addGraphicBox(
 ```
 - Datamatrix Objects
 ```py
-objDm = label.addDataMatrix(data='Test1234', posx=85, posy=10, symbol_height=4, columns=40, rows=40)  # noqa: F841
+objDm = label.addDataMatrix(data='Test1234', posx=85, posy=10, symbol_height=4, columns=40, rows=40)
 ```
 ### Editing Objects
 ```py
