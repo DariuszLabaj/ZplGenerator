@@ -12,6 +12,26 @@ class ZplLabel:
     SCB: str = "^XA"
     ECB: str = "^XZ"
 
+    @property
+    def dpmm(self) -> int:
+        return self.__lcfg.Dpmm
+
+    @property
+    def width(self) -> float:
+        return self.__lcfg.Width
+
+    @property
+    def height(self) -> float:
+        return self.__lcfg.Height
+
+    @property
+    def homePosition(self) -> tuple[float, float]:
+        return self.__lcfg.HomeX/self.__lcfg.Dpmm, self.__lcfg.HomeY/self.__lcfg.Dpmm
+
+    @property
+    def elements(self) -> list[ZplElement]:
+        return self.__label_elements
+
     def __init__(
             self, dpi: int = 200, label_width_mm: float = 10.0, label_height_mm: float = 10.00,
             label_darkness: int = 15, label_home_x: float = 0.0, label_home_y: float = 0.0,
@@ -118,6 +138,64 @@ class ZplLabel:
             case fieldType.box:
                 self.__label_elements[handle] = ZplBoxElement(
                     __posx, __posy, __box_width, __box_height, __border_thickness, self.__lcfg.Dpmm)
+
+    def addElemetsFromString(self, data: str):
+        def tokenize(data: str) -> list[str]:
+            data = data.replace('\n', '')
+            data = data.replace('\r', '')
+            data = data.replace('\t', '')
+            data = data.replace('^XA', '')
+            data = data.replace('^XZ', '')
+            tokens = data.split('^FS')
+            for token in tokens:
+                token = token.strip()
+            return tokens
+        
+        def elementize(tokens: list[str]):
+            elements: list[list[str]] = []
+            for token in tokens:
+                if token != '':
+                    elements.append(token.split('^'))
+            return elements
+
+        def createElements(strElements: list[list[str]]):
+            for element in strElements:
+                match element[1][:2]:
+                    case 'FT':
+                        positions = element[1][2:].split(',')
+                        posX = int(positions[0])/self.dpmm
+                        posY = int(positions[1])/self.dpmm
+                        data = element[3][2:]
+                        fontData = element[2].split(',')
+                        font = fontData[3][2:]
+                        size = int(fontData[1])/self.dpmm
+                        self.addText(data, posX, posY, font, size)
+                    case 'BY':
+                        positions = element[2][2:].split(',')
+                        posX = int(positions[0])/self.dpmm
+                        posY = int(positions[1])/self.dpmm
+                        data = element[4][2:]
+                        dmData = element[3][2:].split(',')
+                        orientataion = dmData[0]
+                        symbol_height = int(dmData[1])
+                        quality = int(dmData[2])
+                        columns = int(dmData[3])
+                        rows = int(dmData[4])
+                        formating = int(dmData[5])
+                        self.addDataMatrix(data, posX, posY, orientataion, symbol_height, quality, columns, rows, formating)
+                    case 'FO':
+                        positions = element[1][2:].split(',')
+                        posX = int(positions[0])/self.dpmm
+                        posY = int(positions[1])/self.dpmm
+                        if element[2].startswith('GB'):
+                            gbData = element[2][2:].split(',')
+                            box_width = int(gbData[0])/self.dpmm
+                            box_height = int(gbData[1])/self.dpmm
+                            border_thickness = int(gbData[2])/self.dpmm
+                            self.addGraphicBox(posX, posY, box_width, box_height, border_thickness)
+        tokens = tokenize(data)
+        elements = elementize(tokens)
+        createElements(elements)
 
     def deleteElement(self, handle):
         self.__label_elements.pop(handle)

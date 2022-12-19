@@ -16,15 +16,16 @@ def main():
     with zplImageFile.open('w', encoding='ASCII') as file:
         file.write(zplImageData)
     # Creating Label
-    label = Zpl.Label(dpi=300,
-                      label_width_mm=120,
-                      label_height_mm=50,
-                      label_darkness=0,
-                      label_home_x=0.5,
-                      label_home_y=0.5,
-                      print_orientation='N',
-                      font_size=Zpl.PtTomm(4),
-                      font='OSansBold.TTF')
+    label = Zpl.Label(
+        dpi=300,
+        label_width_mm=120,
+        label_height_mm=50,
+        label_darkness=0,
+        label_home_x=0.5,
+        label_home_y=0.5,
+        print_orientation='N',
+        font_size=Zpl.PtTomm(4),
+        font='OSansBold.TTF')
     # Adding objects to label
     # Text Obejcts
     objText1 = label.addText(data='Text1', posx=10,
