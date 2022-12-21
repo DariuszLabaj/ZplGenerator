@@ -142,7 +142,7 @@ class ZplLabel:
                 self.__label_elements[handle] = ZplBoxElement(
                     __posx, __posy, __box_width, __box_height, __border_thickness, self.__lcfg.Dpmm)
 
-    def addElemetsFromString(self, data: str):
+    def addElementsFromString(self, data: str):
         def tokenize(data: str) -> list[str]:
             data = data.replace('\n', '')
             data = data.replace('\r', '')

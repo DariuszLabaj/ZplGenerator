@@ -50,14 +50,13 @@ class ZplLabelImageGenerator:
 
 
 def prepareData(data: str) -> str:
-    data = data.replace('<partName>', '952116')
-    data = data.replace('<partNumber>', '1998-DWB0005')
-    data = data.replace('<partIndex>', 'A')
-    data = data.replace('<motorCharasteristics>', '10 VDC 4,5 A 14 U/min')
-    data = data.replace('<manufacturingDate>', '220613')
-    data = data.replace('<manufacturingLoc>', '1')
-    data = data.replace('<serialNo>', '00025')
-    data = data.replace('<dmData>', 'abcd')
+    data = data.replace('<text1>', '123456')
+    data = data.replace('<text2>', '1234-ABC1234')
+    data = data.replace('<text3>', 'A')
+    data = data.replace('<text4>', 'Abcde 12345 !@#$%')
+    data = data.replace('<text5>', '220613')
+    data = data.replace('<text6>', '1')
+    data = data.replace('<text7>', '12345')
     return data
 
 
@@ -66,20 +65,20 @@ def main() -> None:
     SSL Cer
     """
     sampleData = """^XA
-^FT36,156,^A@N,50,,B:ARIALNB.TTF^FD<partName>^FS
-^FT36,216,^A@N,50,,B:ARIALNB.TTF^FD<partNumber>^FS
-^FT430,216,^A@N,50,,B:ARIALNB.TTF^FD<partIndex>^FS
-^FT36,276,^A@N,38,,B:ARIALNB.TTF^FD<motorCharasteristics>^FS
-^FT36,330,^A@N,38,,B:ARIALNB.TTF^FD10Nm 5 min.^FS
-^FT50,382,^A@N,29,,B:ARIALNB.TTF^FD<manufacturingDate>^FS
-^FT80,427,^A@N,29,,B:ARIALNB.TTF^FD<manufacturingLoc>^FS
-^FT156,414,^A@N,50,,B:ARIALNB.TTF^FD<serialNo>^FS
-^BY2.2.10^FO750,252^BXN,5,200,32,32,0,^FD<partNumber>;<partIndex>;<manufacturingDate>;<manufacturingLoc>;<serialNo>^FS
+^FT36,156,^A@N,50,,B:ARIALNB.TTF^FD<text1>^FS
+^FT36,216,^A@N,50,,B:ARIALNB.TTF^FD<text2>^FS
+^FT430,216,^A@N,50,,B:ARIALNB.TTF^FD<text3>^FS
+^FT36,276,^A@N,38,,B:ARIALNB.TTF^FD<text4>^FS
+^FT36,330,^A@N,38,,B:ARIALNB.TTF^FDAbcde 12345 !@#$%^FS
+^FT50,382,^A@N,29,,B:ARIALNB.TTF^FD<text5>^FS
+^FT80,427,^A@N,29,,B:ARIALNB.TTF^FD<text6>^FS
+^FT156,414,^A@N,50,,B:ARIALNB.TTF^FD<text7>^FS
+^BY2.2.10^FO750,252^BXN,5,200,32,32,0,^FD<text2>;<text3>;<text5>;<text6>;<text7>^FS
 ^FO141,348^GB144,93,3^FS
 ^FO36,393^GB108,48,3^FS
 ^FO36,348^GB108,48,3^FS^XZ"""
     label = ZplLabel(dpi=300, label_width_mm=80, label_height_mm=40)
-    label.addElemetsFromString(prepareData(sampleData))
+    label.addElementsFromString(prepareData(sampleData))
     ZplLabelImageGenerator.GenerateImage(label)
 
 
