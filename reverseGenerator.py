@@ -62,6 +62,9 @@ def prepareData(data: str) -> str:
 
 
 def main() -> None:
+    """
+    SSL Cer
+    """
     sampleData = """^XA
 ^FT36,156,^A@N,50,,B:ARIALNB.TTF^FD<partName>^FS
 ^FT36,216,^A@N,50,,B:ARIALNB.TTF^FD<partNumber>^FS
