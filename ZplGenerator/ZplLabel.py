@@ -44,8 +44,8 @@ class ZplLabel:
         self.__last_handle = self.__element_handle
 
     def getConfigurationData(self) -> str:
-        command = self.SCB
-        command += str(self.__lcfg)
+        command = self.SCB + '\n'
+        command += str(self.__lcfg) + '\n'
         command += self.ECB
         return command
 
@@ -56,6 +56,9 @@ class ZplLabel:
                 command += str(element)
         command += self.ECB
         return command
+
+    def __str__(self) -> str:
+        return self.getConfigurationData()+'\n'+self.getLabelData()
 
     def addText(self, data, posx: float, posy: float, font=None, size=None):
         self.__last_handle = self.__element_handle

@@ -1,4 +1,4 @@
-# Zpl language command generator for generating labels, fonts graphic files to send to printers using Zpl language
+# Zpl language command generator for generating labels, fonts and graphic files to send to printers using Zpl language
 
 ## Creating Font File
 

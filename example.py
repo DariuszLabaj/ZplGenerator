@@ -52,6 +52,8 @@ def main():
     with zplLabelFile.open('w', encoding='ASCII') as file:
         file.write(zplLabelData)
 
+    print(label)
+
 
 if __name__ == '__main__':
     main()
