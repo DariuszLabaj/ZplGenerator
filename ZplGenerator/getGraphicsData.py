@@ -1,7 +1,7 @@
 from ZplGenerator.ZplImage import ZplImage
 
 
-def getGraphicsData(*images: ZplImage) -> bytes:
+def getGraphicsData(*images: ZplImage) -> str:
     command = "^XA\n"
     for image in images:
         command += str(image)

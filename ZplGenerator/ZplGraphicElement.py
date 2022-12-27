@@ -47,7 +47,7 @@ class ZplGraphicElement:
         return None
 
     @property
-    def Formating(self) -> int | None:
+    def Formatting(self) -> int | None:
         return None
 
     @property

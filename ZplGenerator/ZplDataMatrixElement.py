@@ -4,7 +4,7 @@ from ZplGenerator.fieldType import fieldType
 class ZplDataMatrixElement:
     @property
     def Type(self) -> fieldType:
-        return fieldType.datamatrix
+        return fieldType.dataMatrix
 
     @property
     def PosX(self) -> float:
@@ -47,8 +47,8 @@ class ZplDataMatrixElement:
         return self.__rows
 
     @property
-    def Formating(self) -> int | None:
-        return self.__formatng
+    def Formatting(self) -> int | None:
+        return self.__formatting
 
     @property
     def Source(self) -> str | None:
@@ -76,7 +76,7 @@ class ZplDataMatrixElement:
 
     def __init__(
             self, posX_mm: float, posY_mm: float, data: str, orientation: str, symbolHeight: int, symbolQuality: int,
-            columns: int, rows: int, formating: int, dpmm: int):
+            columns: int, rows: int, formatting: int, dpmm: int):
         if orientation != 'N' and orientation != 'R' and orientation != 'I' and orientation != 'B':
             raise ValueError(
                 "Accepted Values:\nN = normal\nR = rotated 90 degrees(clockwise)\nI = " +
@@ -100,7 +100,7 @@ class ZplDataMatrixElement:
                 " 200 is specified, the number of these values must be even(10, 12…, 26, 32,\n36, 40, 44, 48, " +
                 "52, 64, 72, 80, 88, 96, 104, 120, 132, 144).\nMoreover, when this value is set as 0, columns " +
                 "is calculated automatically.")
-        if formating not in [0, 1, 2, 3, 4, 5, 6]:
+        if formatting not in [0, 1, 2, 3, 4, 5, 6]:
             raise ValueError(
                 "Accepted Values:\n0 = Automatically choose the encodation scheme based on the characters to" +
                 " be\nencoded.\n1 = Field data is numeric + space(0..9,’ ‘)\n2 = Field data is upper-case " +
@@ -118,10 +118,10 @@ class ZplDataMatrixElement:
         self.__symbol_quality = symbolQuality
         self.__columns = columns
         self.__rows = rows
-        self.__formatng = formating
+        self.__formatting = formatting
 
     def __str__(self) -> str:
-        return f"^BY2.2.10^FO{self.__posx},{self.__posy}^BX{self.__orientation},{self.__symbol_height},{self.__symbol_quality},{self.__columns},{self.__rows},{self.__formatng},^FD{self.__data}^FS\n"  # noqa: E501
+        return f"^BY2.2.10^FO{self.__posx},{self.__posy}^BX{self.__orientation},{self.__symbol_height},{self.__symbol_quality},{self.__columns},{self.__rows},{self.__formatting},^FD{self.__data}^FS\n"  # noqa: E501
 
     def __repr__(self) -> str:
         return self.__str__()

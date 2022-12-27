@@ -40,89 +40,107 @@ class ZplLabel:
     def __str__(self) -> str:
         return self.getConfigurationData()+'\n'+self.getLabelData()
 
-    def addText(self, data, posx: float, posy: float, font=None, size=None):
+    def addText(self, data: str, pos_x: float, pos_y: float, font: str | None = None, size: float | None = None):
         self.__last_handle = self.__element_handle
         inFont = font if font is not None else self.__lcfg.Font
         inSize = size if size is not None else self.__lcfg.FontSize
         self.__label_elements.insert(
             self.__element_handle, ZplTextElement(
-                posx, posy, inSize, inFont, data, self.__lcfg.Dpmm)
+                pos_x, pos_y, inSize, inFont, data, self.__lcfg.Dpmm)
         )
         self.__element_handle += 1
         return self.__last_handle
 
     def addDataMatrix(
-            self, data: str, posx: float, posy: float, orientataion: str = 'N', symbol_height: int = 3,
-            quality: int = 200, columns: int = 0, rows: int = 0, formating: int = 0):
+            self, data: str, pos_x: float, pos_y: float, orientation: str = 'N', symbol_height: int = 3,
+            quality: int = 200, columns: int = 0, rows: int = 0, formatting: int = 0):
         self.__last_handle = self.__element_handle
         self.__label_elements.insert(
             self.__element_handle, ZplDataMatrixElement(
-                posx, posy, data, orientataion, symbol_height, quality, columns, rows, formating, self.__lcfg.Dpmm)
+                pos_x, pos_y, data, orientation, symbol_height, quality, columns, rows, formatting, self.__lcfg.Dpmm)
         )
         self.__element_handle += 1
         return self.__last_handle
 
     def addGraphicObject(
-            self, posx: float = 0.0, posy: float = 0.0, source: str = 'R', data: str = 'UNKNOWN', scalex: int = 1,
-            scaley: int = 1):
+            self, pos_x: float = 0.0, pos_y: float = 0.0, source: str = 'R', data: str = 'UNKNOWN', scale_x: int = 1,
+            scale_y: int = 1):
         self.__last_handle = self.__element_handle
         self.__label_elements.insert(
             self.__element_handle, ZplGraphicElement(
-                posx, posy, source, data, scalex, scaley, self.__lcfg.Dpmm)
+                pos_x, pos_y, source, data, scale_x, scale_y, self.__lcfg.Dpmm)
         )
         self.__element_handle += 1
         return self.__last_handle
 
     def addGraphicBox(
-            self, posx: float = 0.0, posy: float = 0.0, box_width: float = 0.0, box_height: float = 0.0,
+            self, pos_x: float = 0.0, pos_y: float = 0.0, box_width: float = 0.0, box_height: float = 0.0,
             border_thickness: float = 0.125):
         self.__last_handle = self.__element_handle
         self.__label_elements.insert(
             self.__element_handle, ZplBoxElement(
-                posx, posy, box_width, box_height, border_thickness, self.__lcfg.Dpmm)
+                pos_x, pos_y, box_width, box_height, border_thickness, self.__lcfg.Dpmm)
         )
         self.__element_handle += 1
         return self.__last_handle
 
     def editElement(
-            self, handle: int, posx=None, posy=None, font=None, size=None, data=None, orientataion=None,
-            symbol_height=None, symbol_quality=None, columns=None, rows=None, formating=None, source=None,
-            scalex=None, scaley=None, box_width=None, box_height=None, border_thickness=None):
+            self, handle: int, pos_x: float | None = None, pos_y: float | None = None, font: str | None = None,
+            size: float | None = None, data: str | None = None, orientation: str | None = None,
+            symbol_height: int | None = None, symbol_quality: int | None = None, columns: int | None = None,
+            rows: int | None = None, formatting: int | None = None, source: str | None = None,
+            scale_x: int | None = None, scale_y: int | None = None, box_width: float | None = None,
+            box_height: float | None = None, border_thickness: float | None = None):
         __type = self.__label_elements[handle].Type
-        __posx = self.__label_elements[handle].PosX if posx is None else posx
-        __posy = self.__label_elements[handle].PosY if posy is None else posy
+        __pos_x = self.__label_elements[handle].PosX if pos_x is None else pos_x
+        __pos_y = self.__label_elements[handle].PosY if pos_y is None else pos_y
         __font = self.__label_elements[handle].Font if font is None else font
+        __font = __font if __font is not None else ''
         __size = self.__label_elements[handle].FontSize if size is None else size
+        __size = __size if __size is not None else 0.0
         __data = self.__label_elements[handle].Data if data is None else data
-        __orientation = self.__label_elements[handle].Orientation if orientataion is None else orientataion
+        __data = __data if __data is not None else ''
+        __orientation = self.__label_elements[handle].Orientation if orientation is None else orientation
+        __orientation = __orientation if __orientation is not None else ''
         __symbol_height = self.__label_elements[handle].SymbolHeight if symbol_height is None else symbol_height
+        __symbol_height = __symbol_height if __symbol_height is not None else 0
         __symbol_quality = self.__label_elements[handle].SymbolQuality if symbol_quality is None else symbol_quality
+        __symbol_quality = __symbol_quality if __symbol_quality is not None else 0
         __columns = self.__label_elements[handle].Columns if columns is None else columns
+        __columns = __columns if __columns is not None else 0
         __rows = self.__label_elements[handle].Rows if rows is None else rows
-        __formatng = self.__label_elements[handle].Formating if formating is None else formating
+        __rows = __rows if __rows is not None else 0
+        __formatting = self.__label_elements[handle].Formatting if formatting is None else formatting
+        __formatting = __formatting if __formatting is not None else 0
         __source = self.__label_elements[handle].Source if source is None else source
-        __scalex = self.__label_elements[handle].ScaleX if scalex is None else scalex
-        __scaley = self.__label_elements[handle].ScaleY if scaley is None else scaley
+        __source = __source if __source is not None else ''
+        __scale_x = self.__label_elements[handle].ScaleX if scale_x is None else scale_x
+        __scale_x = __scale_x if __scale_x is not None else 0
+        __scale_y = self.__label_elements[handle].ScaleY if scale_y is None else scale_y
+        __scale_y = __scale_y if __scale_y is not None else 0
         __box_width = self.__label_elements[handle].BoxWidth if box_width is None else box_width
+        __box_width = __box_width if __box_width is not None else 0.0
         __box_height = self.__label_elements[handle].BoxHeight if box_height is None else box_height
+        __box_height = __box_height if __box_height is not None else 0.0
         __border_thickness = self.__label_elements[
             handle].BorderThickness if border_thickness is None else border_thickness
+        __border_thickness = __border_thickness if __border_thickness is not None else 0.0
         match __type:
             case fieldType.text:
                 self.__label_elements[handle] = ZplTextElement(
-                    __posx, __posy, __size, __font, __data, self.__lcfg.Dpmm)
-            case fieldType.datamatrix:
+                    __pos_x, __pos_y, __size, __font, __data, self.__lcfg.Dpmm)
+            case fieldType.dataMatrix:
                 self.__label_elements[handle] = ZplDataMatrixElement(
-                    __posx, __posy, __data, __orientation, __symbol_height, __symbol_quality, __columns, __rows,
-                    __formatng, self.__lcfg.Dpmm)
+                    __pos_x, __pos_y, __data, __orientation, __symbol_height, __symbol_quality, __columns, __rows,
+                    __formatting, self.__lcfg.Dpmm)
             case fieldType.graphic:
                 self.__label_elements[handle] = ZplGraphicElement(
-                    __posx, __posy, __source, __data, __scalex, __scaley, self.__lcfg.Dpmm)
+                    __pos_x, __pos_y, __source, __data, __scale_x, __scale_y, self.__lcfg.Dpmm)
             case fieldType.box:
                 self.__label_elements[handle] = ZplBoxElement(
-                    __posx, __posy, __box_width, __box_height, __border_thickness, self.__lcfg.Dpmm)
+                    __pos_x, __pos_y, __box_width, __box_height, __border_thickness, self.__lcfg.Dpmm)
 
-    def deleteElement(self, handle):
+    def deleteElement(self, handle: int):
         self.__label_elements.pop(handle)
 
     def clearLabel(self):
