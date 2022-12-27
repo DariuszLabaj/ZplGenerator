@@ -1,11 +1,12 @@
 from typing import List
+
+from ZplGenerator.fieldType import fieldType
 from ZplGenerator.ZplBoxElement import ZplBoxElement
 from ZplGenerator.ZplDataMatrixElement import ZplDataMatrixElement
 from ZplGenerator.ZplElement import ZplElement
 from ZplGenerator.ZplGraphicElement import ZplGraphicElement
 from ZplGenerator.ZplLabelConfig import ZplLabelConfig
 from ZplGenerator.ZplTextElement import ZplTextElement
-from ZplGenerator.fieldType import fieldType
 
 
 class ZplLabel:

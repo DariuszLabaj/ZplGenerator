@@ -1,4 +1,5 @@
 from typing import Protocol
+
 from ZplGenerator.fieldType import fieldType
 
 

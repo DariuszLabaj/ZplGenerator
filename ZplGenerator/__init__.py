@@ -1,7 +1,7 @@
-from ZplGenerator.ZplLabel import ZplLabel as Label
-from ZplGenerator.ZplImage import ZplImage as Image
-from ZplGenerator.getGraphicsData import getGraphicsData
 from ZplGenerator.getFontData import getFontData
+from ZplGenerator.getGraphicsData import getGraphicsData
+from ZplGenerator.ZplImage import ZplImage as Image
+from ZplGenerator.ZplLabel import ZplLabel as Label
 
 
 def PtTo_mm(points: float) -> float:
