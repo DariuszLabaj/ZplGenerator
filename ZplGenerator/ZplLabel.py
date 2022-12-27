@@ -299,10 +299,10 @@ class ZplLabel:
                 token = token.strip()
             return tokens
 
-        def elementize(tokens: list[str]):
+        def processTokensToElements(tokens: list[str]):
             elements: list[list[str]] = []
             for token in tokens:
-                if token != "":
+                if token:
                     elements.append(token.split("^"))
             return elements
 
@@ -324,22 +324,22 @@ class ZplLabel:
                         posY = int(positions[1]) / self.dpmm
                         data = element[4][2:]
                         dmData = element[3][2:].split(",")
-                        orientataion = dmData[0]
+                        orientation = dmData[0]
                         symbol_height = int(dmData[1])
                         quality = int(dmData[2])
                         columns = int(dmData[3])
                         rows = int(dmData[4])
-                        formating = int(dmData[5])
+                        formatting = int(dmData[5])
                         self.addDataMatrix(
                             data,
                             posX,
                             posY,
-                            orientataion,
+                            orientation,
                             symbol_height,
                             quality,
                             columns,
                             rows,
-                            formating,
+                            formatting,
                         )
                     case "FO":
                         positions = element[1][2:].split(",")
@@ -357,7 +357,7 @@ class ZplLabel:
                         pass
 
         tokens = tokenize(data)
-        elements = elementize(tokens)
+        elements = processTokensToElements(tokens)
         createElements(elements)
 
     def deleteElement(self, handle: int):

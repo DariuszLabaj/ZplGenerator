@@ -23,10 +23,10 @@ def main():
                       label_home_x=0.5,
                       label_home_y=0.5,
                       print_orientation='N',
-                      font_size=Zpl.PtTomm(4),
+                      font_size=Zpl.PtTo_mm(4),
                       font='OSansBold.TTF')
     # Adding objects to label
-    # Text Obejcts
+    # Text Objects
     objText1 = label.addText(data='Text1', pos_x=10,
                              pos_y=20, size=Zpl.PtTo_mm(8))
     objText2 = label.addText(data='Text2', pos_x=30, pos_y=20)  # noqa: F841
@@ -36,7 +36,7 @@ def main():
     # Graphic Box Object
     objBox = label.addGraphicBox(  # noqa: F841
         pos_x=60, pos_y=20, box_width=20, box_height=30, border_thickness=0.25)
-    # Datamatrix Object
+    # DataMatrix Object
     objDm = label.addDataMatrix(data='Test1234', pos_x=85, pos_y=10, symbol_height=4, columns=40, rows=40)  # noqa: F841
     # Editing Object
     label.editElement(objText1, data='Text456')

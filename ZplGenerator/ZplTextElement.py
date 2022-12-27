@@ -8,11 +8,11 @@ class ZplTextElement:
 
     @property
     def PosX(self) -> float:
-        return self.__pos_x_mm
+        return self.__posX_mm
 
     @property
     def PosY(self) -> float:
-        return self.__pos_y_mm
+        return self.__posY_mm
 
     @property
     def Font(self) -> str | None:
@@ -75,17 +75,17 @@ class ZplTextElement:
         return None
 
     def __init__(self, posX_mm: float, posY_mm: float, fontSize: float, font: str, data: str, dpmm: int):
-        self.__pos_x_mm = posX_mm
-        self.__pos_y_mm = posY_mm
+        self.__posX_mm = posX_mm
+        self.__posY_mm = posY_mm
         self.__fontSize_mm = fontSize
         self.__font = font
         self.__data = data
-        self.__pos_x = int(posX_mm * dpmm)
-        self.__pos_y = int(posY_mm * dpmm)
+        self.__posX = int(posX_mm * dpmm)
+        self.__posY = int(posY_mm * dpmm)
         self.__size = int(fontSize * dpmm)
 
     def __str__(self) -> str:
-        return f"^FT{self.__pos_x},{self.__pos_y},^A@N,{self.__size},,B:{self.__font}^FD{self.__data}^FS\n"
+        return f"^FT{self.__posX},{self.__posY},^A@N,{self.__size},,B:{self.__font}^FD{self.__data}^FS\n"
 
     def __repr__(self) -> str:
         return self.__str__()

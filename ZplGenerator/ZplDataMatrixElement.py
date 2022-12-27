@@ -8,11 +8,11 @@ class ZplDataMatrixElement:
 
     @property
     def PosX(self) -> float:
-        return self.__posx_mm
+        return self.__posX_mm
 
     @property
     def PosY(self) -> float:
-        return self.__posy_mm
+        return self.__posY_mm
 
     @property
     def Font(self) -> str | None:
@@ -108,10 +108,10 @@ class ZplDataMatrixElement:
                 "comma, dash, and\nslash(0..9,A..Z,”.-/”)\n4 = Field data is upper-case alphanumeric + " +
                 "space(0..9,A..Z,’ ’)\n5 = Field data is full 128 ASCII 7-bit set\n6 = Field data is full 256 " +
                 "ISO 8-bit set\nDefault Values: 6 ")
-        self.__posx_mm = posX_mm
-        self.__posy_mm = posY_mm
-        self.__posx = int(posX_mm * dpmm)
-        self.__posy = int(posY_mm * dpmm)
+        self.__posX_mm = posX_mm
+        self.__posY_mm = posY_mm
+        self.__posX = int(posX_mm * dpmm)
+        self.__posY = int(posY_mm * dpmm)
         self.__data = data
         self.__orientation = orientation
         self.__symbol_height = symbolHeight
@@ -121,7 +121,7 @@ class ZplDataMatrixElement:
         self.__formatting = formatting
 
     def __str__(self) -> str:
-        return f"^BY2.2.10^FO{self.__posx},{self.__posy}^BX{self.__orientation},{self.__symbol_height},{self.__symbol_quality},{self.__columns},{self.__rows},{self.__formatting},^FD{self.__data}^FS\n"  # noqa: E501
+        return f"^BY2.2.10^FO{self.__posX},{self.__posY}^BX{self.__orientation},{self.__symbol_height},{self.__symbol_quality},{self.__columns},{self.__rows},{self.__formatting},^FD{self.__data}^FS\n"  # noqa: E501
 
     def __repr__(self) -> str:
         return self.__str__()
