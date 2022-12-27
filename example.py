@@ -23,7 +23,7 @@ def main():
                       label_home_x=0.5,
                       label_home_y=0.5,
                       print_orientation='N',
-                      font_size=Zpl.PtTo_mm(4),
+                      font_size=Zpl.PtTomm(4),
                       font='OSansBold.TTF')
     # Adding objects to label
     # Text Obejcts
