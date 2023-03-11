@@ -1,3 +1,4 @@
+from typing import Literal
 from ZplGenerator.fieldType import fieldType
 
 
@@ -73,6 +74,18 @@ class ZplBoxElement:
     @property
     def BorderThickness(self) -> float | None:
         return self.__borderThickness_mm
+
+    @property
+    def MaxNumberOfLines(self) -> int | None:
+        return None
+
+    @property
+    def SpaceBetweenLines(self) -> int | None:
+        return None
+
+    @property
+    def TextJustified(self) -> Literal['L', 'C', 'R', 'J'] | None:
+        return None
 
     def __init__(
             self, posX_mm: float, posY_mm: float, box_width_mm: float, box_height_mm: float, border_thickness_mm: float,

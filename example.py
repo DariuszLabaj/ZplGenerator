@@ -27,7 +27,7 @@ def main():
         font_size=Zpl.PtTomm(4),
         font='OSansBold.TTF')
     # Adding objects to label
-    # Text Obejcts
+    # Text Objects
     objText1 = label.addText(data='Text1', posx=10,
                              posy=20, size=Zpl.PtTomm(8))
     objText2 = label.addText(data='Text2', posx=30, posy=20)  # noqa: F841

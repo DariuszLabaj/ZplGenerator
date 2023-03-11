@@ -1,4 +1,4 @@
-from typing import Protocol
+from typing import Literal, Protocol
 from ZplGenerator.fieldType import fieldType
 
 
@@ -73,6 +73,18 @@ class ZplElement(Protocol):
 
     @property
     def BorderThickness(self) -> float | None:
+        ...
+
+    @property
+    def MaxNumberOfLines(self) -> int | None:
+        ...
+
+    @property
+    def SpaceBetweenLines(self) -> int | None:
+        ...
+
+    @property
+    def TextJustified(self) -> Literal['L', 'C', 'R', 'J'] | None:
         ...
 
     def __str__(self) -> str:

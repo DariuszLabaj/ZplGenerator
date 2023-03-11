@@ -1,3 +1,4 @@
+from typing import Literal, Optional
 from ZplGenerator.fieldType import fieldType
 
 
@@ -28,7 +29,7 @@ class ZplTextElement:
 
     @property
     def Orientation(self) -> str | None:
-        return None
+        return self.__orientation
 
     @property
     def SymbolHeight(self) -> int | None:
@@ -64,7 +65,7 @@ class ZplTextElement:
 
     @property
     def BoxWidth(self) -> float | None:
-        return None
+        return self.__Width_mm
 
     @property
     def BoxHeight(self) -> float | None:
@@ -74,18 +75,48 @@ class ZplTextElement:
     def BorderThickness(self) -> float | None:
         return None
 
-    def __init__(self, posX_mm: float, posY_mm: float, fontSize: float, font: str, data: str, dpmm: int):
+    @property
+    def MaxNumberOfLines(self) -> int | None:
+        return self.__maxNumberOfLines
+
+    @property
+    def SpaceBetweenLines(self) -> int | None:
+        return self.__spaceBetweenLines
+
+    @property
+    def TextJustified(self) -> Literal['L', 'C', 'R', 'J'] | None:
+        return self.__justify
+
+    def __init__(
+            self, posX_mm: float, posY_mm: float, fontSize: float, font: str, data: str, dpmm: int,
+            maxNumberOfLines: int, spaceBetweenLines: int, width: Optional[float] = None,
+            justify: Optional[Literal['Left', 'Center', 'Right', 'Justified']] = None,
+            orientation: Literal['Normal', 'Rotated', 'Inverted', 'BottomUp'] = 'Normal') -> None:
         self.__posx_mm = posX_mm
         self.__posy_mm = posY_mm
         self.__fontSize_mm = fontSize
         self.__font = font
         self.__data = data
         self.__posx = int(posX_mm * dpmm)
-        self.__posy = int(posY_mm * dpmm)
+        self.__posy = round(posY_mm * dpmm)
         self.__size = int(fontSize * dpmm)
+        self.__maxNumberOfLines = maxNumberOfLines
+        self.__spaceBetweenLines = spaceBetweenLines
+        self.__Width_mm = width
+        self.__width = int(width * dpmm) if width is not None else None
+        self.__justify: Literal['L', 'C', 'R', 'J'] | None = justify[0] if justify is not None else None  # type: ignore
+        self.__orientation = orientation[0]
+
+    def __justifiedFont(self) -> str:
+        if self.__width is None or self.__justify is None:
+            return self.__simpleText()
+        return f"^FO{self.__posx},{self.__posy},^A@{self.__orientation},{self.__size},,B:{self.__font}^FB{self.__width},{self.__maxNumberOfLines},{self.__spaceBetweenLines},{self.__justify},0^FD{self.__data}^FS\n"  # noqa: E501
+
+    def __simpleText(self) -> str:
+        return f"^FT{self.__posx},{self.__posy},^A@{self.__orientation},{self.__size},,B:{self.__font}^FD{self.__data}^FS\n"  # noqa: E501
 
     def __str__(self) -> str:
-        return f"^FT{self.__posx},{self.__posy},^A@N,{self.__size},,B:{self.__font}^FD{self.__data}^FS\n"
+        return self.__justifiedFont()
 
     def __repr__(self) -> str:
         return self.__str__()

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Literal, Optional
 from ZplGenerator.ZplBoxElement import ZplBoxElement
 from ZplGenerator.ZplDataMatrixElement import ZplDataMatrixElement
 from ZplGenerator.ZplElement import ZplElement
@@ -52,21 +52,24 @@ class ZplLabel:
     def getLabelData(self) -> str:
         command = self.SCB + '\n'
         for element in self.__label_elements:
-            if element is not None:
-                command += str(element)
+            command += str(element)
         command += self.ECB
         return command
 
     def __str__(self) -> str:
         return self.getConfigurationData()+'\n'+self.getLabelData()
 
-    def addText(self, data, posx: float, posy: float, font=None, size=None):
+    def addText(
+            self, data: str, posx: float, posy: float, font: Optional[str] = None, size: Optional[float] = None,
+            width: Optional[float] = None, justify: Optional[Literal['Left', 'Center', 'Right', 'Justified']] = None,
+            maxNumberOfLines: int = 1, spaceBetweenLines: int = 0,
+            orientation: Literal['Normal', 'Rotated', 'Inverted', 'BottomUp'] = 'Normal'):
         self.__last_handle = self.__element_handle
         inFont = font if font is not None else self.__lcfg.Font
-        inSize = size if size is not None else self.__lcfg.FontSize
+        inSize = size if size is not None else self.__lcfg.FontSize/self.__lcfg.FontSize
         self.__label_elements.insert(
             self.__element_handle, ZplTextElement(
-                posx, posy, inSize, inFont, data, self.__lcfg.Dpmm)
+                posx, posy, inSize, inFont, data, self.__lcfg.Dpmm, maxNumberOfLines, spaceBetweenLines, width, justify, orientation)
         )
         self.__element_handle += 1
         return self.__last_handle
