@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import ZplGenerator as Zpl
-import ZplGenerator.__commands as commands
 
 
 def main():
@@ -31,18 +30,18 @@ def main():
     # Adding objects to label
     # Text Objects
     objText1 = label.addText(data='Text1', posx=10,
-                             posy=20, size=Zpl.PtTomm(8))
-    objText2 = label.addText(data='Text2', posx=30, posy=20)  # noqa: F841
+                             posy=20, size=Zpl.PtTo_mm(8))
+    label.addText(data='Text2', posx=30, posy=20)  # noqa: F841
     # Graphic Object
-    objImage = label.addGraphicObject(  # noqa: F841
+    label.addGraphicObject(  # noqa: F841
         pos_x=0.85, pos_y=2.0, source="E", data=zplImage.name
     )
     # Graphic Box Object
-    objBox = label.addGraphicBox(  # noqa: F841
+    label.addGraphicBox(  # noqa: F841
         pos_x=60, pos_y=20, box_width=20, box_height=30, border_thickness=0.25
     )
     # DataMatrix Object
-    objDm = label.addDataMatrix(
+    label.addDataMatrix(
         data="Test1234", pos_x=85, pos_y=10, symbol_height=4, columns=40, rows=40
     )  # noqa: F841
     # Editing Object

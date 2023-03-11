@@ -5,6 +5,7 @@ from ZplGenerator.ZplElement import ZplElement
 from ZplGenerator.ZplGraphicElement import ZplGraphicElement
 from ZplGenerator.ZplLabelConfig import ZplLabelConfig
 from ZplGenerator.ZplTextElement import ZplTextElement
+from ZplGenerator.fieldType import fieldType
 
 
 class ZplLabel:
@@ -33,6 +34,35 @@ class ZplLabel:
     @property
     def elements(self) -> list[ZplElement]:
         return self.__label_elements
+
+    @staticmethod
+    def __prepOrientation(data: str | None):
+        # 'Normal', 'Rotated', 'Inverted', 'BottomUp'
+        if data is None:
+            return 'Normal'
+        text = data.upper()
+        if text.startswith('N'):
+            return 'Normal'
+        elif text.startswith('R'):
+            return 'Rotated'
+        elif text.startswith('I'):
+            return 'Inverted'
+        else:
+            return 'BottomUp'
+
+    @staticmethod
+    def __prepJust(data: Literal['L', 'C', 'R', 'J'] | None):
+        if data is None:
+            return None
+        match data:
+            case 'L':
+                return 'Left'
+            case 'C':
+                return 'Center'
+            case 'R':
+                return 'Right'
+            case _:
+                return 'Justified'
 
     def __init__(
         self,
@@ -82,12 +112,17 @@ class ZplLabel:
             width: Optional[float] = None, justify: Optional[Literal['Left', 'Center', 'Right', 'Justified']] = None,
             maxNumberOfLines: int = 1, spaceBetweenLines: int = 0,
             orientation: Literal['Normal', 'Rotated', 'Inverted', 'BottomUp'] = 'Normal'):
-        self.__last_handle = self.__element_handle
         inFont = font if font is not None else self.__lcfg.Font
         inSize = size if size is not None else self.__lcfg.FontSize/self.__lcfg.FontSize
+        element = ZplTextElement(
+            posx, posy, inSize, inFont, data, self.__lcfg.Dpmm, maxNumberOfLines, spaceBetweenLines, width, justify,
+            orientation)
+        return self.__insertElement(element)
+
+    def __insertElement(self, element: ZplElement):
+        self.__last_handle = self.__element_handle
         self.__label_elements.insert(
-            self.__element_handle, ZplTextElement(
-                posx, posy, inSize, inFont, data, self.__lcfg.Dpmm, maxNumberOfLines, spaceBetweenLines, width, justify, orientation)
+            self.__element_handle, element
         )
         self.__element_handle += 1
         return self.__last_handle
@@ -180,6 +215,9 @@ class ZplLabel:
         box_width: float | None = None,
         box_height: float | None = None,
         border_thickness: float | None = None,
+        maxNumberOfLines: int | None = None,
+        spaceBetweenLines: int | None = None,
+        justify: Literal['Left', 'Center', 'Right', 'Justified'] | None = None,
     ):
         __type = self.__label_elements[handle].Type
         __pos_x = self.__label_elements[handle].PosX if pos_x is None else pos_x
@@ -244,11 +282,20 @@ class ZplLabel:
         __border_thickness = (
             __border_thickness if __border_thickness is not None else 0.0
         )
+        __maxNumberOfLines = self.__label_elements[
+            handle].MaxNumberOfLines if maxNumberOfLines is None else maxNumberOfLines
+        __maxNumberOfLines = __maxNumberOfLines if __maxNumberOfLines is not None else 1
+        __spaceBetweenLines = self.__label_elements[
+            handle].SpaceBetweenLines if spaceBetweenLines is None else spaceBetweenLines
+        __spaceBetweenLines = __spaceBetweenLines if __spaceBetweenLines is not None else 0
+        __justify = self.__prepJust(
+            self.__label_elements[handle].TextJustified) if justify is None else justify
+
         match __type:
             case fieldType.text:
                 self.__label_elements[handle] = ZplTextElement(
-                    __pos_x, __pos_y, __size, __font, __data, self.__lcfg.Dpmm
-                )
+                    __pos_x, __pos_y, __size, __font, __data, self.__lcfg.Dpmm, __maxNumberOfLines, __spaceBetweenLines,
+                    __box_width, __justify, self.__prepOrientation(__orientation))
             case fieldType.dataMatrix:
                 self.__label_elements[handle] = ZplDataMatrixElement(
                     __pos_x,

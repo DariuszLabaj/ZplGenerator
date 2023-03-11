@@ -92,8 +92,8 @@ class ZplTextElement:
             maxNumberOfLines: int, spaceBetweenLines: int, width: Optional[float] = None,
             justify: Optional[Literal['Left', 'Center', 'Right', 'Justified']] = None,
             orientation: Literal['Normal', 'Rotated', 'Inverted', 'BottomUp'] = 'Normal') -> None:
-        self.__posx_mm = posX_mm
-        self.__posy_mm = posY_mm
+        self.__posX_mm = posX_mm
+        self.__posY_mm = posY_mm
         self.__fontSize_mm = fontSize
         self.__font = font
         self.__data = data

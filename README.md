@@ -36,38 +36,52 @@ label = Zpl.Label(
 ```
 
 ### Adding objects To label
+
 - Text Object
+
 ```py
 objText1 = label.addText(data='Text1', posx=10,
                             posy=20, size=Zpl.PtTomm(8))
 objText2 = label.addText(data='Text2', posx=30, posy=20)
 ```
+
 - Graphic Objects
+
 ```py
 objImage = label.addGraphicObject(
     posx=0.85, posy=2.0, source='E', data=zplImage.name)
 ```
+
 - Graphic Box Objects
+
 ```py
 objBox = label.addGraphicBox(
     posx=60, posy=20, box_width=20, box_height=30, border_thickness=0.25)
 ```
+
 - Datamatrix Objects
+
 ```py
 objDm = label.addDataMatrix(data='Test1234', posx=85, posy=10, symbol_height=4, columns=40, rows=40)
 ```
+
 ### Editing Objects
+
 ```py
 label.editElement(objText1, data='Text456')
 ```
+
 ### Creating printer configuration
+
 ```py
 zplConfigFile = Path('.\\Example\\printerCfg.zpl')
 zplConfigData = label.getConfigurationData()
 with zplConfigFile.open('w', encoding='ASCII') as file:
     file.write(zplConfigData)
 ```
-### Creating Label
+
+### Saving Label
+
 ```py
 zplLabelFile = Path('.\\Example\\label.zpl')
 zplLabelData = label.getLabelData()
