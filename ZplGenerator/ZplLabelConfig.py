@@ -58,7 +58,7 @@ class ZplLabelConfig:
             raise ValueError("Allowed dpi Values are 200 and 300")
         if orientation != 'N' and orientation != 'I':
             raise ValueError(
-                f"Print Oreientation can be N - normal or I - inverted {orientation}")
+                f"Print Orientation can be N - normal or I - inverted {orientation}")
         self.__orientation = orientation
         self.__home_x_mm = home_x
         self.__home_y_mm = home_y

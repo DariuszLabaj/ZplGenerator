@@ -9,11 +9,11 @@ class ZplGraphicElement:
 
     @property
     def PosX(self) -> float:
-        return self.__posx_mm
+        return self.__posX_mm
 
     @property
     def PosY(self) -> float:
-        return self.__posy_mm
+        return self.__posY_mm
 
     @property
     def Font(self) -> str | None:
@@ -48,7 +48,7 @@ class ZplGraphicElement:
         return None
 
     @property
-    def Formating(self) -> int | None:
+    def Formatting(self) -> int | None:
         return None
 
     @property
@@ -98,17 +98,17 @@ class ZplGraphicElement:
             raise ValueError("Scale x Accepted Values: 1 to 10")
         if 1 > scaleY or scaleY > 10:
             raise ValueError("Scale y Accepted Values: 1 to 10")
-        self.__posx_mm = posX_mm
-        self.__posy_mm = posY_mm
+        self.__posX_mm = posX_mm
+        self.__posY_mm = posY_mm
         self.__source = source
         self.__data = data
         self.__scaleX = scaleX
         self.__scaleY = scaleY
-        self.__posx = int(posX_mm * dpmm)
-        self.__posy = int(posY_mm * dpmm)
+        self.__posX = int(posX_mm * dpmm)
+        self.__posY = int(posY_mm * dpmm)
 
     def __str__(self) -> str:
-        return f"^FO{self.__posx},{self.__posy}^XG{self.__source}:{self.__data}.GRF,{self.__scaleX},{self.__scaleY}^FS\n"  # noqa: E501
+        return f"^FO{self.__posX},{self.__posY}^XG{self.__source}:{self.__data}.GRF,{self.__scaleX},{self.__scaleY}^FS\n"  # noqa: E501
 
     def __repr__(self) -> str:
         return self.__str__()

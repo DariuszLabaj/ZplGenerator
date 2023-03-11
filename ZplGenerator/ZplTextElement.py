@@ -9,11 +9,11 @@ class ZplTextElement:
 
     @property
     def PosX(self) -> float:
-        return self.__posx_mm
+        return self.__posX_mm
 
     @property
     def PosY(self) -> float:
-        return self.__posy_mm
+        return self.__posY_mm
 
     @property
     def Font(self) -> str | None:
@@ -48,7 +48,7 @@ class ZplTextElement:
         return None
 
     @property
-    def Formating(self) -> int | None:
+    def Formatting(self) -> int | None:
         return None
 
     @property

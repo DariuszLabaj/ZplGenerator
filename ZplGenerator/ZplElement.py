@@ -48,7 +48,7 @@ class ZplElement(Protocol):
         ...
 
     @property
-    def Formating(self) -> int | None:
+    def Formatting(self) -> int | None:
         ...
 
     @property

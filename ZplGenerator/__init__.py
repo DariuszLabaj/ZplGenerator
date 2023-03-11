@@ -1,5 +1,4 @@
-from ZplGenerator.ZplLabel import ZplLabel as Label
-from ZplGenerator.ZplImage import ZplImage as Image
+from ZplGenerator.getFontData import getFontData
 from ZplGenerator.getGraphicsData import getGraphicsData
 from ZplGenerator.getFontData import getFontData
 from ZplGenerator.reverseGenerator import LabelImageGenerator
