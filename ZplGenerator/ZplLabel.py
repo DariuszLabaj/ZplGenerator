@@ -73,8 +73,8 @@ class ZplLabel:
         label_home_x: float = 0.0,
         label_home_y: float = 0.0,
         print_orientation: str = "N",
-        font_size: float = 5.0,
-        font: str = "ARIAL.FMT",
+        font_size: float = 1.875,
+        font: str = "0",
     ):
         self.__lcfg = ZplLabelConfig(
             label_width_mm,
@@ -99,6 +99,7 @@ class ZplLabel:
 
     def getLabelData(self) -> str:
         command = self.SCB + "\n"
+        command += f"^LH{self.__lcfg.HomeX},{self.__lcfg.HomeY}\n"
         for element in self.__label_elements:
             command += str(element)
         command += self.ECB

@@ -3,6 +3,10 @@ from ZplGenerator.fieldType import fieldType
 
 
 class ZplTextElement:
+    __printerFonts = [
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'GS', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', '0'
+    ]
+
     @property
     def Type(self) -> fieldType:
         return fieldType.text
@@ -110,10 +114,12 @@ class ZplTextElement:
     def __justifiedFont(self) -> str:
         if self.__width is None or self.__justify is None:
             return self.__simpleText()
-        return f"^FO{self.__posx},{self.__posy},^A@{self.__orientation},{self.__size},,B:{self.__font}^FB{self.__width},{self.__maxNumberOfLines},{self.__spaceBetweenLines},{self.__justify},0^FD{self.__data}^FS\n"  # noqa: E501
+        font = f'^A{self.__font}{self.__orientation},{self.__size},' if self.__font in self.__printerFonts else f'^A@{self.__orientation},{self.__size},,B:{self.__font}'  # noqa: E501
+        return f"^FO{self.__posx},{self.__posy},{font}^FB{self.__width},{self.__maxNumberOfLines},{self.__spaceBetweenLines},{self.__justify},0^FD{self.__data}^FS\n"  # noqa: E501
 
     def __simpleText(self) -> str:
-        return f"^FT{self.__posx},{self.__posy},^A@{self.__orientation},{self.__size},,B:{self.__font}^FD{self.__data}^FS\n"  # noqa: E501
+        font = f'^A{self.__font}{self.__orientation},{self.__size},' if self.__font in self.__printerFonts else f'^A@{self.__orientation},{self.__size},,B:{self.__font}'  # noqa: E501
+        return f"^FT{self.__posx},{self.__posy},{font}^FD{self.__data}^FS\n"  # noqa: E501
 
     def __str__(self) -> str:
         return self.__justifiedFont()

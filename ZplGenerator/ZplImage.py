@@ -3,12 +3,15 @@ from typing import List, Tuple
 
 from PIL import Image
 
+from ZplGenerator.compressImage import compress
+
 
 class ZplImage():
-    def __init__(self, path: Path, transparencyThreshold: int = 88, colorThreshold: int = 84, destination: str = 'R'):
+    def __init__(self, path: Path, transparencyThreshold: int = 88, colorThreshold: int = 84, destination: str = 'R', compression: bool = False):
         self.image = Image.open(path, 'r')
         self.destination = destination
-        self.pixelData: List[Tuple[int, int, int, int]] = self.image.getdata()  # type: ignore
+        self.pixelData: List[Tuple[int, int, int, int]
+                             ] = self.image.getdata()  # type: ignore
         self.width, self.height = self.image.size
         self.name = path.stem
         if len(self.name) > 8:
@@ -73,9 +76,12 @@ class ZplImage():
         self.bytesRow = len(self.__numericData[0])
         self.bytesTotal = self.bytesRow*len(self.__numericData)
         self.data = ""
-        for row in self.__numericData:
-            for byte in row:
-                self.data += f"{byte:02x}"
+        tempData = [''.join([f'{byte:02x}' for byte in row])
+                    for row in self.__numericData]
+        if not compression:
+            self.data = ''.join(tempData)
+        else:
+            self.data = compress(tempData)
         self.size = self.__processedImage.size
 
     def BITI(self, bits: int, source: list[bool]) -> int:
@@ -95,5 +101,8 @@ class ZplImage():
     def get(self):
         return self.__processedImage
 
-    def __str__(self) -> str:
+    def raw(self) -> str:
         return f"~DG{self.destination}:{self.name}.GRF,{self.bytesTotal:05},{self.bytesRow:03},{self.data}\n"
+
+    def __str__(self) -> str:
+        return f"^GFA,{self.bytesTotal:05},{self.bytesTotal:05},{self.bytesRow:03},{self.data}\n"
